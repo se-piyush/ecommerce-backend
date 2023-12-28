@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { ProductCatagory } from "../enums";
 
 const productSchema = new Schema<IProduct>(
@@ -38,29 +38,6 @@ const productSchema = new Schema<IProduct>(
     seller: {
       type: String,
     },
-    reviews: [
-      {
-        user: {
-          type: String,
-          ref: "User",
-          unique: true,
-        },
-        rating: {
-          type: Number,
-          required: true,
-          min: 1,
-          max: 5,
-        },
-        comment: {
-          type: String,
-          required: true,
-        },
-        createdAt: {
-          type: Date,
-          default: Date.now,
-        },
-      },
-    ],
     createdAt: {
       type: Date,
       default: Date.now,

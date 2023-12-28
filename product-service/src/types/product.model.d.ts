@@ -1,5 +1,4 @@
-// Define the Product interface extending mongoose.Document
-interface IProduct extends Document {
+interface IProduct {
   title: string;
   description: string;
   price: number;
@@ -13,10 +12,16 @@ interface IProduct extends Document {
   updatedAt: Date;
 }
 
-// Define the Review interface
+interface IProductDocument extends IProduct, Mongoose.Document {}
+
 interface Review {
-  user: mongoose.Schema.Types.ObjectId;
+  product: mongoose.Schema.Types.ObjectId;
+  user: string;
   rating: number;
-  comment: string;
+  title: string;
+  description: string;
   createdAt: Date;
 }
+
+interface ReviewDocument extends Review, Mongoose.Document {}
+interface ReviewModel extends Mongoose.Model<ReviewDocument> {}

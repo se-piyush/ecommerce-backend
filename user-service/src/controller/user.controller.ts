@@ -58,15 +58,15 @@ export const register = async (req: Request, res: Response) => {
   }
 };
 
-export const verify = (req: Request, res: Response) => {
+export const verify = async (req: Request, res: Response) => {
   const jwt = <string>req.query.userJwtToken || "";
   try {
     const decodedUser = verifyToken(jwt);
-    const user = User.findOne(decodedUser.id);
+    const user = await User.findOne(decodedUser.id);
     if (!user) {
       return res.status(401);
     }
-    return res.status(200);
+    return res.status(200).send({ userId: user.id });
   } catch (err) {
     return res.status(401);
   }
