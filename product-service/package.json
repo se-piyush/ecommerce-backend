@@ -1,0 +1,21 @@
+{
+  "name": "user-service",
+  "version": "1.0.0",
+  "description": "user service",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sepiyusharma@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.2",
+    "mongoose": "^8.0.3"
+  }
+}

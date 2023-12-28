@@ -1,0 +1,22 @@
+{
+  "name": "ecommerce-backend",
+  "version": "1.0.0",
+  "description": "root repo for all the module based microservices",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sepiyusharma/ecommerce-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sepiyusharma/ecommerce-backend/issues"
+  },
+  "homepage": "https://github.com/sepiyusharma/ecommerce-backend#readme",
+  "devDependencies": {
+    "prettier": "^3.1.1"
+  }
+}
