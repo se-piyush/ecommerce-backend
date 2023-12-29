@@ -4,14 +4,14 @@ import sequelize from "../config/db.config";
 import { UserRole } from "../enum";
 
 class User extends Model {
-  public id!: string;
-  public firstName!: string;
-  public lastName!: string;
-  public email!: string;
-  public password!: string;
-  public role!: UserRole;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  declare id: string;
+  declare firstName: string;
+  declare lastName: string;
+  declare email: string;
+  declare password: string;
+  declare role: UserRole;
+  declare readonly createdAt: Date;
+  declare readonly updatedAt: Date;
 
   public async comparePassword(candidatePassword: string): Promise<boolean> {
     return bcrypt.compare(candidatePassword, this.password);
