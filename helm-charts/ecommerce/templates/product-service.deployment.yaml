@@ -18,6 +18,22 @@ spec:
         - name: {{ .Values.productService.name }}
           image: "{{ .Values.productService.image }}:{{ .Values.productService.imageTag }}"
           imagePullPolicy: Never
+          env:
+          - name: MONGO_USER
+            value: root
+          - name: MONGO_HOST
+            value: "{{ .Chart.Name }}-mongodb"  
+          - name: MONGO_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mongodb-root-password
+                name: "{{ .Chart.Name }}-mongodb" 
+          - name: MONGO_PORT
+            value: "27017"
+          - name: PORT
+            value: "4000"
+          - name: USER_SERVICE
+            value: {{ .Values.userService.name }}           
           ports:
             - name: {{ .Values.productService.service.portName }}
               containerPort: 4000
@@ -35,3 +51,4 @@ spec:
               cpu: 500m
             requests:
               cpu: 200m
+          args: ["npm","start"]    

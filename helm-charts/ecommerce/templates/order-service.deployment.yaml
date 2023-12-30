@@ -14,14 +14,53 @@ spec:
       labels:
         app: {{ .Values.orderService.name }}
     spec:
+      initContainers:
+      - name: migrate
+        image: "{{ .Values.userService.image }}:{{ .Values.userService.imageTag }}"
+        imagePullPolicy: Never
+        env:
+        - name: DB_USERNAME
+          value: postgres
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: postgres-password
+              name: "{{ .Chart.Name }}-postgresql"
+        - name: DB_NAME
+          value: postgres
+        - name: DB_HOST
+          value: "{{ .Chart.Name }}-postgresql"
+        - name: DB_PORT
+          value: "5432"
+        args: ["npm","run","migrate:up"]
       containers:
         - name: {{ .Values.orderService.name }}
           image: "{{ .Values.orderService.image }}:{{ .Values.orderService.imageTag }}"
           imagePullPolicy: Never
           ports:
             - name: {{ .Values.orderService.service.portName }}
-              containerPort: 4000
+              containerPort: 5000
               protocol: TCP
+          env:
+          - name: PORT
+            value: "5000"
+          - name: DB_USERNAME
+            value: postgres
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: postgres-password
+                name: "{{ .Chart.Name }}-postgresql"
+          - name: DB_NAME
+            value: postgres
+          - name: DB_HOST
+            value: "{{ .Chart.Name }}-postgresql"
+          - name: DB_PORT
+            value: "5432"
+          - name: USER_SERVICE
+            value: {{ .Values.userService.name }} 
+          - name: PRODUCT_SERVICE
+            value: {{ .Values.productService.name }}     
           livenessProbe:
             httpGet:
               path: /health
@@ -35,3 +74,4 @@ spec:
               cpu: 500m
             requests:
               cpu: 200m
+          args: ["npm","start"]    
