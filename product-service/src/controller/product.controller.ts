@@ -7,7 +7,9 @@ export const getProducts = async (
   res: Response
 ): Promise<Response> => {
   try {
-    const filter = <Record<string, string>>req.query.filter;
+    const filter = <Record<string, string>>(
+      JSON.parse(<string>req.query.filter || "{}")
+    );
 
     const isFilterInvalid = Object.keys(filter).find((filterKey) =>
       ["category", "title", "id"].includes(filterKey)
@@ -22,7 +24,7 @@ export const getProducts = async (
 
     if (filter.id) {
       products = await Product.find({
-        _id: new mongoose.Types.ObjectId(filter._id),
+        _id: new mongoose.Types.ObjectId(filter.id),
       });
     } else {
       products = await Product.find(filter);
@@ -80,7 +82,7 @@ export const getProductQuantityById = async (
   res: Response
 ): Promise<Response> => {
   try {
-    const productId: string = req.params.id;
+    const productId: string = req.params.productId;
 
     const product: IProduct | null = await Product.findById(productId)
       .select("quantity")
@@ -102,17 +104,20 @@ export const updateProductQuantityById = async (
   res: Response
 ): Promise<Response> => {
   try {
-    const productId: string = req.params.id;
+    const productId: string = req.params.productId;
     const newQuantity: number = req.body.quantity;
 
-    const updatedProduct: IProduct | null = await Product.findByIdAndUpdate(
-      productId,
-      { $set: { quantity: newQuantity } },
-      { new: true }
+    const updatedProduct = await Product.findOneAndUpdate(
+      {
+        _id: new mongoose.Types.ObjectId(productId),
+        quantity: { $gte: newQuantity },
+      },
+      { $inc: { quantity: -newQuantity } },
+      { returnDocument: "after" }
     ).exec();
 
     if (!updatedProduct) {
-      return res.status(404).json({ message: "Product not found." });
+      return res.status(404).json({ message: "Product cannot be updated." });
     }
 
     return res.status(200).json(updatedProduct);

@@ -6,10 +6,11 @@ import productRoutes from "./route/product.router";
 import reviewRoutes from "./route/review.router";
 import { authenticateUserMiddleware } from "./middleware/authenticateUser.middleware";
 import { health, ready } from "./controller/product.controller";
+import mongoose, { ConnectOptions } from "mongoose";
 
 const app = express();
-const PORT = 4000;
-
+const PORT = parseInt(process.env.PORT || "4000");
+const mongoUrl = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/ecommerce?authSource=admin`;
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
@@ -21,6 +22,18 @@ app.use(authenticateUserMiddleware);
 app.use("/product", productRoutes);
 app.use("/product", reviewRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+mongoose
+  .connect(mongoUrl || "", <ConnectOptions>{
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("MongoDB connected");
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+    process.exit(1);
+  });

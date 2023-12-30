@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import axios from "axios";
-const userServiceUrl = "https://localhost:3000";
+const userServiceUrl = process.env.USER_SERVICE || "http://localhost:3000";
 export const authenticateUserMiddleware = async (
   req: Request,
   resp: Response,
