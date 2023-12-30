@@ -13,3 +13,17 @@ spec:
             name: {{ .Values.userService.name }}
             port:
               number: 80
+      - path: /product
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Values.productService.name }}
+            port:
+              number: 80 
+      - path: /orders
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Values.orderService.name }}
+            port:
+              number: 80               
