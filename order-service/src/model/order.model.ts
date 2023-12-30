@@ -1,12 +1,13 @@
 import { CreationOptional, DataTypes, Model } from "sequelize";
-import sequelize from "../config/db.config";
+import sequelize from "../db";
+import OrderStatus from "./orderStatus.model";
 
 class Order extends Model<IOrderAttributes> implements IOrderAttributes {
   declare userId: string;
   declare id: CreationOptional<string>;
   declare productId: number;
   declare totalAmount: number;
-  declare quanity: number;
+  declare quantity: number;
   declare createdAt: Date;
   declare updatedAt: Date;
 }
@@ -18,14 +19,14 @@ Order.init(
       allowNull: false,
     },
     productId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     totalAmount: {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    quanity: {
+    quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -40,8 +41,11 @@ Order.init(
   },
   {
     sequelize,
-    modelName: "Order",
+    tableName: "order",
   }
 );
+
+Order.hasMany(OrderStatus);
+OrderStatus.belongsTo(Order);
 
 export default Order;

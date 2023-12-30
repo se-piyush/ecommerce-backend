@@ -10,10 +10,13 @@ export const createOrder = async (
   res: Response
 ): Promise<Response> => {
   try {
-    const { productId, totalAmount, quanity } = req.body; // this would also contain payment info
+    const { productId, totalAmount, quantity } = req.body; // this would also contain payment info
     const userId = req.userId;
-    const productQuanityLeft = await getProductQuantityById(productId);
-    if (productQuanityLeft > 0) {
+    const productQuanityLeft = await getProductQuantityById(
+      productId,
+      <string>req.headers.cookie
+    );
+    if (productQuanityLeft <= 0) {
       return res.status(403).send("not sufficient inventory");
     }
     // call payment service
@@ -22,12 +25,12 @@ export const createOrder = async (
     const order = await Order.create({
       productId,
       userId,
-      quanity,
+      quantity,
       totalAmount,
     });
     await OrderStatus.create({
       status: OrderStatusEnum.paymentPending,
-      orderId: order.id,
+      OrderId: order.id,
     });
     return res.status(201).json(order);
   } catch (error: any) {
@@ -45,7 +48,10 @@ export const getOrder = async (
     // call payment service
     await makePayment();
 
-    const order = await Order.findAll({ include: Order, where: { userId } });
+    const order = await Order.findAll({
+      where: { userId },
+      include: OrderStatus,
+    });
 
     return res.status(201).json(order);
   } catch (error: any) {

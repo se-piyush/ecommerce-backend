@@ -1,5 +1,5 @@
 import { DataTypes, Model } from "sequelize";
-import sequelize from "../config/db.config";
+import sequelize from "../db";
 import { OrderStatusEnum } from "../enum";
 import Order from "./order.model";
 
@@ -9,7 +9,7 @@ class OrderStatus
 {
   declare status: OrderStatusEnum;
   declare createdAt: Date;
-  declare orderId: string;
+  declare OrderId: string;
 }
 
 OrderStatus.init(
@@ -19,7 +19,7 @@ OrderStatus.init(
       defaultValue: OrderStatusEnum.paymentPending,
       allowNull: false,
     },
-    orderId: {
+    OrderId: {
       type: DataTypes.INTEGER,
       references: {
         model: Order,
@@ -33,7 +33,7 @@ OrderStatus.init(
   },
   {
     sequelize,
-    modelName: "OrderStatus",
+    tableName: "orderstatus",
   }
 );
 

@@ -2,13 +2,12 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import orderRoutes from "./route/order.router";
 import orderStatusRoutes from "./route/orderStatus.router";
-import "./config/passport.config";
 import { authenticateUserMiddleware } from "./middleware/authenticateUser.middleware";
 import { health, ready } from "./controller/order.controller";
 
 const app = express();
-const PORT = 5000;
-const rootApipath = "/api/v1/order";
+const PORT = parseInt(process.env.PORT || "5000");
+const rootApipath = "/orders";
 // Middleware
 app.use(express.json());
 app.use(cookieParser());

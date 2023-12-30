@@ -6,27 +6,39 @@ export const updateOrderStatus = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const { orderId } = req.params;
-  const status = <string>req.query.status || "";
-  const isValidStatus = !!Object.values(OrderStatusEnum).filter(
-    (enumStatus) => enumStatus !== status
-  ).length;
-  if (!isValidStatus) {
-    return res.status(400).send("Invalid status");
+  const { OrderId } = req.params;
+  const status = <string>req.body.status || "";
+  try {
+    const isValidStatus = !!Object.values(OrderStatusEnum).filter(
+      (enumStatus) => enumStatus === status
+    ).length;
+    if (!isValidStatus) {
+      return res.status(400).send("Invalid status");
+    }
+    await OrderStatus.create({ status, OrderId });
+    return res.status(201).send();
+  } catch (err: any) {
+    console.log(err);
+    return res.status(500).send(err.message);
   }
-  await OrderStatus.create({ status, orderId });
-  return res.status(201).send();
 };
 
 export const getOrderStatus = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const { orderId } = req.params;
-  const orderStatus = await OrderStatus.findOne({ where: { orderId } });
-  if (orderStatus) {
-    return res.status(201).json({ orderStatus });
-  } else {
-    return res.status(404).send(`Order against order id ${orderId} not found.`);
+  const { OrderId } = req.params;
+  try {
+    const orderStatus = await OrderStatus.findOne({ where: { OrderId } });
+    if (orderStatus) {
+      return res.status(201).json({ orderStatus });
+    } else {
+      return res
+        .status(404)
+        .send(`Order against order id ${OrderId} not found.`);
+    }
+  } catch (err: any) {
+    console.log(err);
+    return res.status(500).send(err.message);
   }
 };

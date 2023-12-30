@@ -3,6 +3,6 @@ interface IOrderAttributes {
   productId: number;
   totalAmount: number;
   createdAt?: Date;
-  quanity: number;
+  quantity: number;
   updatedAt?: Date;
 }

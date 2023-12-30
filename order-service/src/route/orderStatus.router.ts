@@ -6,7 +6,7 @@ import {
 
 const router = express.Router();
 
-router.get("/:orderId/status", getOrderStatus);
-router.post("/:orderId/status", updateOrderStatus);
+router.get("/:OrderId/status", getOrderStatus);
+router.put("/:OrderId/status", updateOrderStatus);
 
 export default router;
