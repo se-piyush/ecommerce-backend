@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node
 
 WORKDIR /app
 
@@ -9,5 +9,3 @@ RUN npm i
 COPY . .
 
 RUN npm run build
-
-CMD ["npm", "start"]
