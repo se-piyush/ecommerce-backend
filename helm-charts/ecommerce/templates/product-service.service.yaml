@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.productService.name }}
+  labels:
+    app: {{ .Values.productService.name }}
+spec:
+  type: {{ .Values.productService.service.type }}
+  ports:
+    - port: 80
+      targetPort: {{ .Values.productService.service.portName }}
+      protocol: TCP
+  selector:
+    app: {{ .Values.productService.name }}
