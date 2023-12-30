@@ -1,10 +1,9 @@
 // src/controllers/UserController.ts
 
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import passport from "passport";
 import User from "../model/users.model";
-import { generateToken, verifyToken } from "../utils/token";
-import { JwtPayload } from "jsonwebtoken";
+import token from "../utils/token";
 
 export const login = (req: Request, res: Response) => {
   passport.authenticate("local", (err: Error, user: User) => {
@@ -17,19 +16,20 @@ export const login = (req: Request, res: Response) => {
     //     }
 
     //   });
-    res.cookie("jwt", generateToken("id", user.id), {
+    res.cookie("jwt", token.generateToken("id", user.id), {
       httpOnly: true,
       maxAge: 3600000,
     });
     res.status(200).json({
       message: "Logged in successfully",
-      token: generateToken("id", user.id),
+      token: token.generateToken("id", user.id),
     });
   })(req, res);
 };
 
 export const logout = (req: Request, res: Response) => {
   res.clearCookie("jwt");
+  token.changeSecret();
   res.status(200).json({ message: "Logged out successfully" });
 };
 
@@ -43,9 +43,9 @@ export const register = async (req: Request, res: Response) => {
 
     const newUser = await User.create({ email, password, firstName, lastName });
 
-    const token = generateToken("id", newUser.id);
+    const jwtToken = token.generateToken("id", newUser.id);
 
-    res.cookie("jwt", token, { httpOnly: true, maxAge: 3600000 });
+    res.cookie("jwt", jwtToken, { httpOnly: true, maxAge: 3600000 });
 
     // Return success response
     res
@@ -61,8 +61,8 @@ export const register = async (req: Request, res: Response) => {
 export const verify = async (req: Request, res: Response) => {
   const jwt = <string>req.query.userJwtToken || "";
   try {
-    const decodedUser = verifyToken(jwt);
-    const user = await User.findOne(decodedUser.id);
+    const decodedUser = token.verifyToken(jwt);
+    const user = await User.findByPk(decodedUser.id);
     if (!user) {
       return res.status(401).send();
     }

@@ -1,6 +1,6 @@
 import { Model, DataTypes } from "sequelize";
 import bcrypt from "bcrypt";
-import sequelize from "../config/db.config";
+import sequelize from "../db";
 import { UserRole } from "../enum";
 
 class User extends Model {
@@ -56,7 +56,7 @@ User.init(
   },
   {
     sequelize,
-    modelName: "User",
+    tableName: "users",
   }
 );
 
