@@ -121,3 +121,11 @@ export const updateProductQuantityById = async (
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+export const health = (req: Request, res: Response) => res.status(200).send();
+
+export const ready = (req: Request, res: Response) => {
+  // LATER
+  // check the db connection
+  return res.status(200).send();
+};

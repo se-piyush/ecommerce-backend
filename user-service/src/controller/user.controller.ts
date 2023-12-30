@@ -64,10 +64,18 @@ export const verify = async (req: Request, res: Response) => {
     const decodedUser = verifyToken(jwt);
     const user = await User.findOne(decodedUser.id);
     if (!user) {
-      return res.status(401);
+      return res.status(401).send();
     }
     return res.status(200).send({ userId: user.id });
   } catch (err) {
-    return res.status(401);
+    return res.status(401).send();
   }
+};
+
+export const health = (req: Request, res: Response) => res.status(200).send();
+
+export const ready = (req: Request, res: Response) => {
+  // LATER
+  // check the db connection
+  return res.status(200).send();
 };

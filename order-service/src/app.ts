@@ -4,6 +4,7 @@ import orderRoutes from "./route/order.router";
 import orderStatusRoutes from "./route/orderStatus.router";
 import "./config/passport.config";
 import { authenticateUserMiddleware } from "./middleware/authenticateUser.middleware";
+import { health, ready } from "./controller/order.controller";
 
 const app = express();
 const PORT = 5000;
@@ -13,6 +14,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Routes
+app.get("/health", health);
+app.get("/ready", ready);
 app.use(authenticateUserMiddleware);
 app.use(`${rootApipath}`, orderRoutes);
 app.use(`${rootApipath}`, orderStatusRoutes);
