@@ -33,7 +33,7 @@ spec:
           - name: PORT
             value: "4000"
           - name: USER_SERVICE
-            value: {{ .Values.userService.name }}           
+            value: "http://{{ .Values.userService.name }}"           
           ports:
             - name: {{ .Values.productService.service.portName }}
               containerPort: 4000

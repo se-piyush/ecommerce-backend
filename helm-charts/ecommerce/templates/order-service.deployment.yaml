@@ -16,7 +16,7 @@ spec:
     spec:
       initContainers:
       - name: migrate
-        image: "{{ .Values.userService.image }}:{{ .Values.userService.imageTag }}"
+        image: "{{ .Values.orderService.image }}:{{ .Values.orderService.imageTag }}"
         imagePullPolicy: Never
         env:
         - name: DB_USERNAME
@@ -58,9 +58,18 @@ spec:
           - name: DB_PORT
             value: "5432"
           - name: USER_SERVICE
-            value: {{ .Values.userService.name }} 
+            value: "http://{{ .Values.userService.name }}" 
           - name: PRODUCT_SERVICE
-            value: {{ .Values.productService.name }}     
+            value: "http://{{ .Values.productService.name }}"  
+          - name: RABBITMQ_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: rabbitmq-password
+                name: "{{ .Chart.Name }}-rabbitmq"
+          - name: RABBITMQ_USERNAME
+            value: user
+          - name: RABBITMQ_HOST
+            value: "{{ .Chart.Name }}-rabbitmq"       
           livenessProbe:
             httpGet:
               path: /health

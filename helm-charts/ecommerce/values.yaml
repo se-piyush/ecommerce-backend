@@ -41,4 +41,9 @@ orderService:
   autoscaling:
     minReplicas: 1
     maxReplicas: 2
-    targetCPUUtilizationPercentage: 80      
+    targetCPUUtilizationPercentage: 80 
+
+integrationService:
+  name: integration-service
+  image: integration-service
+  imageTag: latest         
