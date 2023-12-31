@@ -5,3 +5,5 @@
 minikube addons enable ingress
 
 minikube tunnel in seperate window
+
+minikube start --cpus=4 --memory 7000
