@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 import userRoutes from "./route/users.route";
 import "./config/passport.config";
-import { health, ready } from "./controller/user.controller";
+import { health, ready, verify } from "./controller/user.controller";
 
 const app = express();
 const PORT = parseInt(process.env.PORT || "3000");
@@ -16,6 +16,8 @@ app.use(cookieParser());
 app.use(passport.initialize());
 
 // Routes
+app.get("/internal/verify", verify);
+
 app.use("/users", userRoutes);
 app.get("/health", health);
 app.get("/ready", ready);
