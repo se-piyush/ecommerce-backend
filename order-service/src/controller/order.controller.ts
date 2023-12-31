@@ -4,6 +4,7 @@ import OrderStatus from "../model/orderStatus.model";
 import { getProductQuantityById } from "../services/product.service";
 import { makePayment } from "../services/payment.service";
 import { OrderStatusEnum } from "../enum";
+import Publisher, { Connection } from "../services/publisher.service";
 
 export const createOrder = async (
   req: Request,
@@ -32,6 +33,13 @@ export const createOrder = async (
       status: OrderStatusEnum.paymentPending,
       OrderId: order.id,
     });
+    const publisher = new Publisher();
+    const connect = await Connection.getConnection();
+    publisher.publish(
+      JSON.stringify({ orderId: order.id, productId, quantity }),
+      connect,
+      "orderStatus"
+    );
     return res.status(201).json(order);
   } catch (error: any) {
     return res.status(500).json({ error: error.message });

@@ -29,7 +29,10 @@ export const getOrderStatus = async (
 ): Promise<Response> => {
   const { OrderId } = req.params;
   try {
-    const orderStatus = await OrderStatus.findOne({ where: { OrderId } });
+    const orderStatus = await OrderStatus.findOne({
+      where: { OrderId },
+      order: [["id", "DESC"]],
+    });
     if (orderStatus) {
       return res.status(201).json({ orderStatus });
     } else {

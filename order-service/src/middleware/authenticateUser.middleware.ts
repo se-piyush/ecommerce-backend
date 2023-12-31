@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import axios from "axios";
-const userServiceUrl = process.env.USER_SERVICE || "http://localhost:3000";
+const userServiceUrl = process.env.USER_SERVICE;
 export const authenticateUserMiddleware = async (
   req: Request,
   resp: Response,
@@ -8,7 +8,7 @@ export const authenticateUserMiddleware = async (
 ) => {
   const userJwtToken = req.cookies.userAuthToken;
   try {
-    const resp = await axios.get(`${userServiceUrl}/users/verify`, {
+    const resp = await axios.get(`${userServiceUrl}/internal/verify`, {
       params: { userJwtToken },
     });
     req.userId = resp.data.userId;
