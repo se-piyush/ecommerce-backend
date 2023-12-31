@@ -8,7 +8,7 @@ export const authenticateUserMiddleware = async (
 ) => {
   const userJwtToken = req.cookies.userAuthToken;
   try {
-    const resp = await axios.get(`${userServiceUrl}/users/verify`, {
+    const resp = await axios.get(`${userServiceUrl}/internal/verify`, {
       params: { userJwtToken },
     });
     req.userId = resp.data.userId;

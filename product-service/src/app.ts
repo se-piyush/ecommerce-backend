@@ -5,7 +5,11 @@ import cookieParser from "cookie-parser";
 import productRoutes from "./route/product.router";
 import reviewRoutes from "./route/review.router";
 import { authenticateUserMiddleware } from "./middleware/authenticateUser.middleware";
-import { health, ready } from "./controller/product.controller";
+import {
+  health,
+  ready,
+  updateProductQuantityById,
+} from "./controller/product.controller";
 import mongoose, { ConnectOptions } from "mongoose";
 
 const app = express();
@@ -18,12 +22,15 @@ app.use(cookieParser());
 // Routes
 app.get("/health", health);
 app.get("/ready", ready);
-app.use(authenticateUserMiddleware);
+// this route is for service to service communication only
+app.put("/internal/product/:productId/quantity", updateProductQuantityById);
+
+app.use("/product", authenticateUserMiddleware);
 app.use("/product", productRoutes);
 app.use("/product", reviewRoutes);
 
 mongoose
-  .connect(mongoUrl || "", <ConnectOptions>{
+  .connect(mongoUrl, <ConnectOptions>{
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
