@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.integrationService.name }}
+  labels:
+    app: {{ .Values.integrationService.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.integrationService.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.integrationService.name }}
+    spec:
+      containers:
+        - name: {{ .Values.integrationService.name }}
+          image: "{{ .Values.integrationService.image }}:{{ .Values.integrationService.imageTag }}"
+          imagePullPolicy: Never
+          env:
+          - name: RABBITMQ_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: rabbitmq-password
+                name: "{{ .Chart.Name }}-rabbitmq"
+          - name: RABBITMQ_USERNAME
+            value: user
+          - name: ORDER_SERVICE
+            value: "http://{{ .Values.orderService.name }}"
+          - name: PRODUCT_SERVICE
+            value: "http://{{ .Values.productService.name }}"
+          - name: RABBITMQ_HOST
+            value: "{{ .Chart.Name }}-rabbitmq" 
+          livenessProbe:
+            exec:
+              command:
+              - cat
+              - /tmp/healthy
+          readinessProbe:
+            exec:
+              command:
+              - cat
+              - /tmp/ready      
+          resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 200m
+          args: ["npm","start"]    
