@@ -1,0 +1,53 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "product-service",
+    "dateExported": "2024-01-01T00:10:40.357Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "abab82ad-37bf-4b35-a9aa-4c12d37fa411",
+            "colId": "53184ed5-abe9-4ee3-bcc1-599811f064b6",
+            "containerId": "",
+            "name": "http://localhost/product/create",
+            "url": "http://localhost/product/create",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-01-01T00:06:55.487Z",
+            "modified": "2024-01-01T00:06:55.487Z",
+            "headers": [
+                {
+                    "name": "Cookie",
+                    "value": "userAuthToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjliODZkMmJmLTFhYjUtNDFiMC04NWRlLTY4YjQxMzc1MTY0OCIsImlhdCI6MTcwNDA2MTI1NywiZXhwIjoxNzA0MDY0ODU3fQ.-mZ2h-AjI9I_FGWUwD4v7Cd5UoonPZET2GMWB8fIcIA;"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\"title\":\"title\",\n      \"description\":\"decription\",\n      \"price\":100,\n      \"category\":\"Books\",\n      \"quantity\":10,\n      \"imageUrl\":\"image\",\n      \"tags\":\"tags\"}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "2598672f-d0b5-4434-8f94-6691f8704133",
+            "colId": "53184ed5-abe9-4ee3-bcc1-599811f064b6",
+            "containerId": "",
+            "name": "http://locahost/product/list?filter={",
+            "url": "http://locahost/product/list?filter={\"id\":\"6591d5e08986a798d4e157bb\"}",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-01-01T00:07:15.757Z",
+            "modified": "2024-01-01T00:07:15.757Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "filter",
+                    "value": "{\"id\":\"6591d5e08986a798d4e157bb\"}",
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        }
+    ]
+}

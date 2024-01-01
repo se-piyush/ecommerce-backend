@@ -1,0 +1,83 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "order-service",
+    "dateExported": "2024-01-01T00:10:46.701Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "21d22a2b-7dc4-409a-adee-9c1192b0661c",
+            "colId": "4e40ab66-89c8-4fe1-a997-1e83da2d44b5",
+            "containerId": "",
+            "name": "http://localhost:5000/orders",
+            "url": "http://localhost/orders",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-01-01T00:07:54.915Z",
+            "modified": "2024-01-01T00:07:54.915Z",
+            "headers": [
+                {
+                    "name": "Cookie",
+                    "value": "userAuthToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY1MjE0YTJmLTJlODctNDFmMC04Y2ZjLTI1OGQ0ZjBjN2FiNyIsImlhdCI6MTcwNDA1ODE5MywiZXhwIjoxNzA0MDYxNzkzfQ.SisCCwdrgVK_jVP6snzNXSyMfK5S6SF9EW2k9nQeWIg;"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "9bf00747-5d5a-445a-b32d-f51fd4768659",
+            "colId": "4e40ab66-89c8-4fe1-a997-1e83da2d44b5",
+            "containerId": "",
+            "name": "http://localhost/orders",
+            "url": "http://localhost/orders",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-01-01T00:08:22.596Z",
+            "modified": "2024-01-01T00:08:22.596Z",
+            "headers": [
+                {
+                    "name": "Cookie",
+                    "value": "userAuthToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjliODZkMmJmLTFhYjUtNDFiMC04NWRlLTY4YjQxMzc1MTY0OCIsImlhdCI6MTcwNDA2MTI1NywiZXhwIjoxNzA0MDY0ODU3fQ.-mZ2h-AjI9I_FGWUwD4v7Cd5UoonPZET2GMWB8fIcIA;"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\"productId\":\"6591e9855d6177b92df30246\",\"totalAmount\":12334,\"quantity\":1}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "daf714c7-9107-4381-80e9-6385a72cd233",
+            "colId": "4e40ab66-89c8-4fe1-a997-1e83da2d44b5",
+            "containerId": "",
+            "name": "http://localhost:5000/orders/:orderId/status?status=",
+            "url": "http://localhost/orders/2/status",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-01-01T00:08:57.773Z",
+            "modified": "2024-01-01T00:08:57.773Z",
+            "headers": [
+                {
+                    "name": "Cookie",
+                    "value": "userAuthToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjliODZkMmJmLTFhYjUtNDFiMC04NWRlLTY4YjQxMzc1MTY0OCIsImlhdCI6MTcwNDA2MTI1NywiZXhwIjoxNzA0MDY0ODU3fQ.-mZ2h-AjI9I_FGWUwD4v7Cd5UoonPZET2GMWB8fIcIA;"
+                }
+            ],
+            "params": [
+                {
+                    "name": "status",
+                    "value": "\"land\"",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\"status\":\"payment successfull\"}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}
