@@ -42,7 +42,7 @@ and follow the instructions mentioned there.
 - While calling the apis makes sure that minikube tunnel is open in seperate terminal.
 
 ```bash
-  minikube tunnel in seperate window
+  minikube tunnel
 ```
 
 ##Deployment
@@ -61,7 +61,7 @@ There are mainly 4 services `order-service`,`integration-service`,`product-servi
 
 - **product-service**: This service is responsible to maintain details about a product and uses mongoDB, this service has also exposed private api `/internal/product/:productId/quanity` which is used by `integration-service` to commit the quantity after successfull payment.
 
-- **order-service**: This service has majorly 2 responsibilities 1. To create order 2. To update the order status depending upon the various scenarios
+- **order-service**: This service has majorly 2 responsibilities 1. To create order, 2. To update the order status depending upon the various scenarios
   Right now it pushes the order status to rabbitmq so that `integration-service` service could update the status of quantity and orderstatus itself if the payment is successfull (payment service not implemeted yet.)
 
 - **inventegration-service**: This is service right now subscribe to rabbitmq and processes the orderstatus Events and updates the quantity using the `product-service` service api along with the updating the orderstatus using `order-service` service api.
