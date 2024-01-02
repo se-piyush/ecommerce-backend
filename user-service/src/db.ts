@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
-import * as dbConfig from "./config/database.config";
-const dbConfigurationObject = (<any>dbConfig).development;
+import dbConfig from "./config/database.config";
+const dbConfigurationObject = dbConfig.development;
 const sequelize = new Sequelize(
   dbConfigurationObject.database,
   dbConfigurationObject.username,
