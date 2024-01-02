@@ -61,7 +61,7 @@ export const getOrder = async (
       include: OrderStatus,
     });
 
-    return res.status(201).json(order);
+    return res.status(200).json(order);
   } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
