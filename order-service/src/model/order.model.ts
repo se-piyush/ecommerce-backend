@@ -45,7 +45,4 @@ Order.init(
   }
 );
 
-Order.hasMany(OrderStatus);
-OrderStatus.belongsTo(Order);
-
 export default Order;

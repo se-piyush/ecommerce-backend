@@ -1,14 +1,13 @@
 import { Sequelize } from "sequelize";
-import * as dbConfig from "./config/database.config";
-const dbConfigurationObject = (<any>dbConfig).development;
+const { development } = require("./config/database.config");
 const sequelize = new Sequelize(
-  dbConfigurationObject.database,
-  dbConfigurationObject.username,
-  dbConfigurationObject.password,
+  development.database,
+  development.username,
+  development.password,
   {
-    host: dbConfigurationObject.host,
-    port: dbConfigurationObject.port,
-    dialect: dbConfigurationObject.dialect,
+    host: development.host,
+    port: development.port,
+    dialect: development.dialect,
   }
 );
 
