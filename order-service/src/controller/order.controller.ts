@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import Order from "../model/order.model";
-import OrderStatus from "../model/orderStatus.model";
 import { getProductQuantityById } from "../services/product.service";
 import { makePayment } from "../services/payment.service";
 import { OrderStatusEnum } from "../enum";
 import Publisher, { Connection } from "../services/publisher.service";
+import Order from "../model/order.model";
+import OrderStatus from "../model/orderStatus.model";
 
 export const createOrder = async (
   req: Request,
@@ -22,7 +22,6 @@ export const createOrder = async (
     }
     // call payment service
     await makePayment();
-
     const order = await Order.create({
       productId,
       userId,
@@ -33,6 +32,7 @@ export const createOrder = async (
       status: OrderStatusEnum.paymentPending,
       OrderId: order.id,
     });
+
     const publisher = new Publisher();
     const connect = await Connection.getConnection();
     publisher.publish(
@@ -42,6 +42,7 @@ export const createOrder = async (
     );
     return res.status(201).json(order);
   } catch (error: any) {
+    console.log(error);
     return res.status(500).json({ error: error.message });
   }
 };

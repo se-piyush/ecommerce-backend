@@ -1,6 +1,5 @@
 import { CreationOptional, DataTypes, Model } from "sequelize";
 import sequelize from "../db";
-import OrderStatus from "./orderStatus.model";
 
 class Order extends Model<IOrderAttributes> implements IOrderAttributes {
   declare userId: string;
