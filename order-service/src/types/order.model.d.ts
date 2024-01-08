@@ -1,6 +1,6 @@
 interface IOrderAttributes {
   userId: string;
-  productId: number;
+  productId: string;
   totalAmount: number;
   createdAt?: Date;
   quantity: number;

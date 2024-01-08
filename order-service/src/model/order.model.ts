@@ -4,7 +4,7 @@ import sequelize from "../db";
 class Order extends Model<IOrderAttributes> implements IOrderAttributes {
   declare userId: string;
   declare id: CreationOptional<string>;
-  declare productId: number;
+  declare productId: string;
   declare totalAmount: number;
   declare quantity: number;
   declare createdAt: Date;
